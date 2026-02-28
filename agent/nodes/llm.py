@@ -22,7 +22,8 @@ def _system_prompt(state: AgentState) -> SystemMessage:
         f"## Name: '{state['name']}'\n"
         f"## Your 'Soul' (as defined by you and the user):\n```\n{state['soul_md']}\n```\n"
         f"## Your currently-relevant long-term memories:\n{[f"- {m['content']}" for m in state['long_term_memories']]}\n"
-        f"## Your scratchpad (jot down all relevant short term memories / context you'd like to remember for your current task here):\n```\n{state['notepad']}\n```\n"
+        f"## Your scratchpad (jot down all relevant short term memories / context you'd like to remember for your "
+        f"current task here):\n```\n{state['notepad']}\n```\n"
         f"## Relevant files you've opened:\n```\n{'\n'.join(stringify_file_list(state['files_open']))}\n```\n"
         f"## Relevant tools you have access to:\n```\n{stringify_tool_list(state['tools'])}\n```\n\n"
         

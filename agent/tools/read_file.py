@@ -9,6 +9,7 @@ Copyright (c) 2026 William Chastain. All rights reserved.
 import hashlib
 from pathlib import Path
 
+from langchain_core.tools import tool
 from langgraph.types import Command
 
 from agent.fs.File import File
@@ -20,6 +21,7 @@ NON_EXISTENT_FILE: File = {
     "sha_256": "null"
 }
 
+@tool
 def read_file(path: str) -> Command:
     """Tool that reads a file and appends it to the state's files_total variable."""
 

@@ -8,7 +8,6 @@ Copyright (c) 2026 William Chastain. All rights reserved.
 
 from langchain_groq import ChatGroq
 
-
 qwen = ChatGroq(
     model="qwen/qwen3-32b",
     temperature=0.8

@@ -8,10 +8,12 @@ Copyright (c) 2026 William Chastain. All rights reserved.
 
 from typing import Annotated
 
+from langchain_core.tools import tool
 from langgraph.prebuilt import InjectedState
 from langgraph.types import Command
 
 
+@tool
 def replace_string_in_notepad(str_to_replace: str, replacement: str, state: Annotated[dict, InjectedState]) -> Command:
     """Replaces `str_to_replace` in the notepad with `replacement`."""
 
@@ -21,6 +23,7 @@ def replace_string_in_notepad(str_to_replace: str, replacement: str, state: Anno
     notepad.replace(str_to_replace, replacement)
     return Command(update={"notepad": notepad})
 
+@tool
 def add_to_notepad(str_to_add: str, state: Annotated[dict, InjectedState]) -> Command:
     """Appends `str_to_add` to the end of the current notepad. Does NOT inject a newline before content."""
 
@@ -28,6 +31,7 @@ def add_to_notepad(str_to_add: str, state: Annotated[dict, InjectedState]) -> Co
     notepad += str_to_add
     return Command(update={"notepad": notepad})
 
+@tool
 def set_notepad(notepad_content: str) -> Command:
     """Replaces entirety of notepad with the passed string."""
 

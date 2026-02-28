@@ -8,7 +8,6 @@ Copyright (c) 2026 William Chastain. All rights reserved.
 
 from typing import TypedDict
 
-
 class Memory(TypedDict):
     """A memory is a record of an event or experience that an agent has had. It can be used to store information about
     the agent's experiences, which can be used to inform future decisions and actions."""
