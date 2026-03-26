@@ -11,7 +11,7 @@ This project was developed with the assistance of AI coding tools (Claude Code).
 - **LangGraph orchestration** — stateful, cyclical graph with tool-call loops and automatic routing
 - **Long-term memory** — agent access to ChromaDB-backed semantic memory store
 - **Short-term memory** — an in-context notepad the agent can freely read and write onto
-- **File workspace** — read/write/delete tools scoped to `~/.twin2` (or configured agent root) with custom agent-managed context management for open files
+- **File workspace** — read/write/delete tools scoped to `~/.twin` (or configured agent root) with custom agent-managed context management for open files
 - **Shell access** — single commands and multi-line scripts, with user approval before execution
 - **Soul/personality system** — a `soul.md` personality file loaded at the start of every turn, inspired by [OpenClaw](https://github.com/Clad3815/open-claw)
 - **Context compression** — automatic summarization when the message history exceeds ~80k tokens
