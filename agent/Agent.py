@@ -16,7 +16,7 @@ from rich.console import Console
 
 from agent.AgentState import AgentState
 from agent.nodes.init import init
-from agent.nodes.llm import llm
+from agent.nodes.act import act
 from agent.nodes.summarize_memory import summarize_memory
 from agent.tools.agent_notepad import add_to_notepad, replace_string_in_notepad, set_notepad
 from agent.tools.remove_file_from_context import remove_file_from_context
@@ -28,7 +28,7 @@ from agent.tools.write_file import write_file
 REQUIRED_TOOLS = [read_file, write_file, remove_file_from_context, replace_string_in_notepad, add_to_notepad, store_memory, query_memories, remove_memory_from_context, delete_memory, run_command, run_shell_script]
 
 
-def _route_llm(state: AgentState) -> str:
+def _route_act(state: AgentState) -> str:
     """Route to tool_node if the LLM made tool calls, otherwise to summarize_memory."""
     last = state["message_history"][-1]
     if isinstance(last, AIMessage) and last.tool_calls:
@@ -112,7 +112,7 @@ class Agent:
             for msg in messages:
                 if isinstance(msg, ToolMessage):
                     self.console.print(f"[dim]  ↳ {msg.content}[/dim]")
-        elif node_name == "llm":
+        elif node_name == "act":
             messages = delta.get("message_history", [])
             ai_msg = next((m for m in reversed(messages) if isinstance(m, AIMessage)), None)
             if ai_msg and ai_msg.tool_calls:
@@ -125,14 +125,14 @@ class Agent:
         graph = StateGraph(AgentState)
 
         graph.add_node("init", init)
-        graph.add_node("llm", llm)
+        graph.add_node("act", act)
         graph.add_node("tool_node", ToolNode(tools=self.tools, messages_key="message_history"))
         graph.add_node("summarize_memory", summarize_memory)
 
         graph.add_edge(START, "init")
-        graph.add_edge("init", "llm")
-        graph.add_conditional_edges("llm", _route_llm)
-        graph.add_edge("tool_node", "llm")
+        graph.add_edge("init", "act")
+        graph.add_conditional_edges("act", _route_act)
+        graph.add_edge("tool_node", "act")
         graph.add_edge("summarize_memory", END)
 
         return graph.compile()

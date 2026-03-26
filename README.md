@@ -4,34 +4,27 @@ A general-purpose autonomous AI agent built with [LangGraph](https://github.com/
 
 ## AI Use Notice
 
-This project was developed with the assistance of AI coding tools (Claude Code). While the design, architecture, and review of all code is done by a human, portions of the implementation were written or accelerated using AI assistance. [CLAUDE.md](CLAUDE.md) is included so others can use similar tools under consistent guidelines.
+This project was developed with the assistance of AI coding tools (Claude Code). While the design, architecture, and review of all code is done by me, portions of the implementation were written or accelerated using AI assistance. [CLAUDE.md](CLAUDE.md) is included so others can use similar tools under consistent guidelines.
 
 ## Features
 
 - **LangGraph orchestration** — stateful, cyclical graph with tool-call loops and automatic routing
 - **Long-term memory** — ChromaDB-backed semantic memory that is automatically queried and updated each turn
-- **Short-term scratchpad** — an in-context notepad the agent can freely read and write
-- **File workspace** — sandboxed read/write/delete tools scoped to `~/.twin2/workspace/`
+- **Short-term memory** — an in-context notepad the agent can freely read and write
+- **File workspace** — read/write/delete tools scoped to `~/.twin2` (or configured agent root) with custom context management for open files
 - **Shell access** — single commands and multi-line scripts, with user approval before execution
-- **Soul system** — a `soul.md` personality file loaded at the start of every turn, inspired by [OpenClaw](https://github.com/Clad3815/open-claw)
+- **Soul/personality system** — a `soul.md` personality file loaded at the start of every turn, inspired by [OpenClaw](https://github.com/Clad3815/open-claw)
 - **Context compression** — automatic summarization when the message history exceeds ~80k tokens
 - **Web search** — DuckDuckGo search tool included by default
 
 ## Architecture
 
-```
-START → init → memory_manager → llm ──► tool_node → memory_manager → llm → ...
-                                     │
-                                     └──► remember → summarize_memory → END
-```
 
 | Node | Role |
 |---|---|
 | `init` | Loads `soul.md` into state |
-| `memory_manager` | Fetches relevant long-term memories from ChromaDB; prunes stale ones |
-| `llm` | Builds the system prompt and calls the main model |
+| `act` | Builds the system prompt and calls the main model |
 | `tool_node` | Executes any tool calls emitted by the model |
-| `remember` | Extracts durable facts from the turn and persists them to ChromaDB |
 | `summarize_memory` | Compresses history if token count exceeds threshold |
 
 ## Requirements

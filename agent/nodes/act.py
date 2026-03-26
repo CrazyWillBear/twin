@@ -62,7 +62,7 @@ def _system_prompt(state: AgentState) -> list[SystemMessage]:
         ))
     ]
 
-def llm(state: AgentState) -> dict:
+def act(state: AgentState) -> dict:
     """The review node. This node should be designed to elicit a response that will help the agent to review its
     current state and make decisions about what to do next."""
 

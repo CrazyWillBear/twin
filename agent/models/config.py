@@ -11,6 +11,5 @@ from agent.models.OpenAI import gpt_5_1
 
 MODEL_CONFIG = {
     "review": oss_120b,
-    "memory_manager": qwen,
-    "summarize": qwen,
+    "summarize": qwen
 }
