@@ -6,11 +6,8 @@ file, You can obtain one at https://mozilla.org/MPL/2.0/.
 Copyright (c) 2026 William Chastain. All rights reserved.
 """
 
-from agent.models.Groq import qwen, oss_120b
-from agent.models.OpenAI import gpt_5_1
+from memory_server.config import DEFAULT_COLLECTION_NAME
+from memory_server.MemoryServer import MemoryServer
+from memory_server.client import memory_client
 
-MODEL_CONFIG = {
-    "review": oss_120b,
-    "memory_manager": qwen,
-    "summarize": qwen,
-}
+__all__ = ["MemoryServer", "DEFAULT_COLLECTION_NAME", "memory_client"]

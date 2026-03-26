@@ -14,6 +14,7 @@ from langchain_core.tools import BaseTool
 
 from agent.fs.File import File
 from agent.memory.Memory import Memory
+from agent.util.reducers import merge_files_open
 
 
 class AgentState(TypedDict):
@@ -22,8 +23,10 @@ class AgentState(TypedDict):
     soul_md: str
     long_term_memories: list[Memory]
     notepad: str
-    files_open: list[File]
+    files_open: Annotated[list[File], merge_files_open]
     files_total: Annotated[List[File], operator.add]
     tools: list[BaseTool]
 
     message_history: Annotated[List[AnyMessage], operator.add]
+    compressed_history: List[AnyMessage]
+    compressed_at: int  # len(message_history) at the time of last compression; 0 if never compressed

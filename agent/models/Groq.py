@@ -12,3 +12,8 @@ qwen = ChatGroq(
     model="qwen/qwen3-32b",
     temperature=0.8
 )
+
+oss_120b = ChatGroq(
+    model="openai/gpt-oss-120b",
+    temperature=0.8
+)

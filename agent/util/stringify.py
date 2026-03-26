@@ -8,7 +8,7 @@ Copyright (c) 2026 William Chastain. All rights reserved.
 
 import json
 
-from langchain_core.tools import BaseTool
+from langchain_core.tools import BaseTool, Tool, StructuredTool
 
 from agent.fs.File import File
 from agent.memory.Memory import Memory
@@ -18,10 +18,9 @@ def stringify_tool_list(tools: list[BaseTool]) -> str:
 
     res = ""
     for tool in tools:
-        if not isinstance(tool, BaseTool):
-            raise ValueError(f"Expected a list of BaseTool instances, but got {type(tool)}")
-        tool: BaseTool = tool
-        res += f"- {tool.name} ({tool.args}): {tool.description}\n"
+        if not isinstance(tool, BaseTool) and not isinstance(tool, Tool) and not isinstance(tool, StructuredTool):
+            raise ValueError(f"Expected a list of StructuredTool/Tool/BaseTool instances, but got {type(tool)}")
+        res += f"- `{tool.name}`\n\tArgs: {tool.args}\n\tDescription: {tool.description}\n\n"
     return res
 
 def stringify_file_list(files: list[File]) -> str:

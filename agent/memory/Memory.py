@@ -12,6 +12,7 @@ class Memory(TypedDict):
     """A memory is a record of an event or experience that an agent has had. It can be used to store information about
     the agent's experiences, which can be used to inform future decisions and actions."""
 
+    id: str
     timestamp: str
     content: str
     tags: list[str]
