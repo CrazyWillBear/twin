@@ -9,15 +9,15 @@ This project was developed with the assistance of AI coding tools (Claude Code).
 ## Features
 
 - **LangGraph orchestration** — stateful, cyclical graph with tool-call loops and automatic routing
-- **Long-term memory** — ChromaDB-backed semantic memory that is automatically queried and updated each turn
-- **Short-term memory** — an in-context notepad the agent can freely read and write
-- **File workspace** — read/write/delete tools scoped to `~/.twin2` (or configured agent root) with custom context management for open files
+- **Long-term memory** — agent access to ChromaDB-backed semantic memory store
+- **Short-term memory** — an in-context notepad the agent can freely read and write onto
+- **File workspace** — read/write/delete tools scoped to `~/.twin2` (or configured agent root) with custom agent-managed context management for open files
 - **Shell access** — single commands and multi-line scripts, with user approval before execution
 - **Soul/personality system** — a `soul.md` personality file loaded at the start of every turn, inspired by [OpenClaw](https://github.com/Clad3815/open-claw)
 - **Context compression** — automatic summarization when the message history exceeds ~80k tokens
 - **Web search** — DuckDuckGo search tool included by default
 
-## Architecture
+## Graph Architecture
 
 
 | Node | Role |
@@ -31,6 +31,7 @@ This project was developed with the assistance of AI coding tools (Claude Code).
 
 - Python 3.14
 - A [Groq](https://console.groq.com/) API key
+- (optional) An [OpenAI](https://platform.openai.com/) API key if you want to use their models, which can be configured in [`agent/models/config.py`](agent/models/config.py)
 
 ## Setup
 
@@ -53,7 +54,7 @@ Optionally, create a soul file to give the agent a personality (there is a defau
 
 ```bash
 mkdir -p ~/.twin2
-echo "You are Twin, a helpful and curious assistant." > ~/.twin/soul.md
+echo "You are Twin, a helpful and curious assistant..." > ~/.twin/soul.md
 ```
 
 ## Running
@@ -70,7 +71,7 @@ Type `exit` or `quit` to end the session.
 | Path | Purpose |
 |---|---|
 | `~/.twin/soul.md` | Agent personality/identity (loaded each turn) |
-| `~/.twin/workspace/` | Agent's sandboxed file workspace |
+| `~/.twin/workspace/` | Agent's file workspace |
 | `~/.twin/memory/` | ChromaDB long-term memory store |
 | `FS_CONFIG.py` | Root path configuration |
 | `agent/models/config.py` | Model role assignments |
